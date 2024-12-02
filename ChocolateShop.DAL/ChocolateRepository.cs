@@ -30,10 +30,19 @@ namespace ChocolateShop.DAL
                 var param = new { Id = id };
                 ChocolateDto result = connection.QueryFirst<ChocolateDto>(query, param);
 
+                query = ChocolateQueries.GetChocolateAdditives;
+                result.Additives = connection.Query<AdditiveDto>(query, param).ToList();
+
+                query = ChocolateQueries.GetChocolateCompany;
+                result.Company = connection.QueryFirst<CompanyDto>(query, param);
+
+                query = ChocolateQueries.GetChocolateType;
+                result.Type = connection.QueryFirst<TypeDto>(query, param);
+
                 return result;
             }
         }
-        public void AddChocolate(ChocolateDto data)
+        public void AddChocolate(ChocolateDto chocolate, int CompanyId, int TypeId, List<int> AdditivesId)
         {
             using (var connection = new NpgsqlConnection(Options.ConnectionString))
             {
@@ -41,15 +50,23 @@ namespace ChocolateShop.DAL
 
                 string query = ChocolateQueries.AddChocolate;
                 var param = new { 
-                    Name = data.Name, 
-                    Cost = data.Cost, 
-                    ProductDate = data.ProductDate, 
-                    BestBefore = data.BestBefore, 
-                    Weight = data.Weight, 
-                    CompanyId = data.CompanyId, 
-                    TypeId = data.TypeId 
+                    Name = chocolate.Name, 
+                    Cost = chocolate.Cost, 
+                    ProductDate = chocolate.ProductDate, 
+                    BestBefore = chocolate.BestBefore, 
+                    Weight = chocolate.Weight,
+                    CompanyId = CompanyId,
+                    TypeId = TypeId
                 };
-                connection.Query<ChocolateDto>(query, param);
+                int ChocolateId = connection.QueryFirst<int>(query, param);
+
+                query = ChocolateQueries.AddChocolateAdditives;
+                foreach (int additiveId in AdditivesId)
+                {
+                    var additiveParam = new { ChocolateId=ChocolateId, AdditiveId=additiveId };
+                    connection.Query(query, additiveParam);
+                }
+
             }
         }
     }
