@@ -8,12 +8,17 @@ namespace ForTests
         static void Main(string[] args)
         {
             ChocolateRepository repository = new ChocolateRepository();
-            ChocolateDto chocolate = repository.GetChocolateById(1);
-            //foreach (AdditiveDto additive in chocolate.Additives)
-            //{
-            //    Console.WriteLine($"{additive.Id} - {additive.Name}");
-            //}
-            Console.WriteLine($"{chocolate.Company.Id} - {chocolate.Company.Name} - {chocolate.Company.Country}");
+            ChocolateDto chocolate = new ChocolateDto()
+            {
+                Name = "Banana",
+                Cost = 300,
+                ProductDate = "25.03.25",
+                BestBefore = 3,
+                Weight = 80,
+                Company = new() { Id=1 },
+                Type = new() { Id=3 }
+            };
+            repository.AddChocolate(chocolate);
         }
     }
 }

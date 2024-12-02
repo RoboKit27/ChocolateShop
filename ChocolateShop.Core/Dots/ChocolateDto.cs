@@ -14,14 +14,13 @@ namespace ChocolateShop.Core.Dots
         public string ProductDate { get; set; }
         public int BestBefore { get; set; }
         public int Weight { get; set; }
-        public int CompanyId { get; set; }
-        public int TypeId { get; set; }
-        public List<AdditiveDto> Additives { get; set; }
         public CompanyDto Company {  get; set; }
+        public TypeDto Type { get; set; }
+        public List<AdditiveDto> Additives { get; set; }
 
         public override string ToString()
         {
-            return $"Id: {this.Id}\nName: {this.Name}\nCost: {this.Cost}\nProductDate: {this.ProductDate}\nBestBefore: {this.BestBefore}\nWeight: {this.Weight}\nCompanyId: {this.CompanyId}\nTypeId: {this.TypeId}";
+            return $"Id: {this.Id}\nName: {this.Name}\nCost: {this.Cost}\nProductDate: {this.ProductDate}\nBestBefore: {this.BestBefore}\nWeight: {this.Weight}";
         }
 
     }

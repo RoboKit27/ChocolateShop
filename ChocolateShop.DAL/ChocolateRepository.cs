@@ -36,6 +36,9 @@ namespace ChocolateShop.DAL
                 query = ChocolateQueries.GetChocolateCompany;
                 result.Company = connection.QueryFirst<CompanyDto>(query, param);
 
+                query = ChocolateQueries.GetChocolateType;
+                result.Type = connection.QueryFirst<TypeDto>(query, param);
+
                 return result;
             }
         }
@@ -51,11 +54,13 @@ namespace ChocolateShop.DAL
                     Cost = data.Cost, 
                     ProductDate = data.ProductDate, 
                     BestBefore = data.BestBefore, 
-                    Weight = data.Weight, 
-                    CompanyId = data.CompanyId, 
-                    TypeId = data.TypeId 
+                    Weight = data.Weight,
+                    CompanyId = data.Company.Id,
+                    TypeId = data.Type.Id
                 };
                 connection.Query<ChocolateDto>(query, param);
+
+                query = ChocolateQueries.AddChocolateAdditives;
             }
         }
     }
