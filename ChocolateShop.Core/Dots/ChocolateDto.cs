@@ -16,6 +16,8 @@ namespace ChocolateShop.Core.Dots
         public int Weight { get; set; }
         public int CompanyId { get; set; }
         public int TypeId { get; set; }
+        public List<AdditiveDto> Additives { get; set; }
+        public CompanyDto Company {  get; set; }
 
         public override string ToString()
         {

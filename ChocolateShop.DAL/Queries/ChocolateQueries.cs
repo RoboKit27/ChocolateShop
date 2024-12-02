@@ -8,8 +8,10 @@ namespace ChocolateShop.DAL.Queries
 {
     public static class ChocolateQueries
     {
-        public const string GetAllChocolatesQuery = "SELECT \"Id\", \"Name\", \"Cost\", \"ProductDate\", \"BestBefore\", \"Weight\", \"CompanyId\", \"TypeId\" FROM public.\"Chocolate\";";
-        public const string GetChocolateByIdQuery = "SELECT \"Id\", \"Name\", \"Cost\", \"ProductDate\", \"BestBefore\", \"Weight\", \"CompanyId\", \"TypeId\" FROM public.\"Chocolate\" where \"Id\"=@Id;";
-        public const string AddChocolate = "INSERT INTO \"Chocolate\"(\"Name\", \"Cost\", \"ProductDate\", \"BestBefore\", \"Weight\", \"CompanyId\", \"TypeId\") VALUES (@Name, @Cost, @ProductDate, @BestBefore, @Weight, @CompanyId, @TypeId);";
+        public const string GetAllChocolatesQuery = "select \"Id\", \"Name\", \"Cost\", \"ProductDate\", \"BestBefore\", \"Weight\", \"CompanyId\", \"TypeId\" from \"Chocolate\";";
+        public const string GetChocolateByIdQuery = "select \"Id\", \"Name\", \"Cost\", \"ProductDate\", \"BestBefore\", \"Weight\", \"CompanyId\", \"TypeId\" from \"Chocolate\" where \"Id\"=@Id;";
+        public const string AddChocolate = "insert into \"Chocolate\"(\"Name\", \"Cost\", \"ProductDate\", \"BestBefore\", \"Weight\", \"CompanyId\", \"TypeId\") values (@Name, @Cost, @ProductDate, @BestBefore, @Weight, @CompanyId, @TypeId);";
+        public const string GetChocolateAdditives = "select A.\"Id\", A.\"Name\" from \"Additive\" as A join \"Chocolate_Additive\" as CA on CA.\"AdditiveId\"=A.\"Id\" join \"Chocolate\" as CH on CH.\"Id\"=CA.\"ChocolateId\" where CA.\"ChocolateId\"=@Id";
+        public const string GetChocolateCompany = "select COM.\"Id\", COM.\"Name\", COM.\"Country\" from \"Company\" as COM join \"Chocolate\" as CH on CH.\"CompanyId\"=COM.\"Id\" where CH.\"Id\"=@Id";
     }
 }

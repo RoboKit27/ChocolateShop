@@ -30,6 +30,12 @@ namespace ChocolateShop.DAL
                 var param = new { Id = id };
                 ChocolateDto result = connection.QueryFirst<ChocolateDto>(query, param);
 
+                query = ChocolateQueries.GetChocolateAdditives;
+                result.Additives = connection.Query<AdditiveDto>(query, param).ToList();
+
+                query = ChocolateQueries.GetChocolateCompany;
+                result.Company = connection.QueryFirst<CompanyDto>(query, param);
+
                 return result;
             }
         }
