@@ -14,7 +14,7 @@ namespace ChocolateShop.DAL.Queries
         public const string GetChocolateCompany = "select COM.\"Id\", COM.\"Name\", COM.\"Country\" from \"Company\" as COM join \"Chocolate\" as CH on CH.\"CompanyId\"=COM.\"Id\" where CH.\"Id\"=@Id";
         public const string GetChocolateType = "select T.\"Id\", T.\"Name\" from \"Type\" as T join \"Chocolate\" as CH on CH.\"TypeId\"=T.\"Id\" where CH.\"Id\"=@Id";
 
-        public const string AddChocolate = "insert into \"Chocolate\"(\"Name\", \"Cost\", \"ProductDate\", \"BestBefore\", \"Weight\", \"CompanyId\", \"TypeId\") values (@Name, @Cost, @ProductDate, @BestBefore, @Weight, @CompanyId, @TypeId);";
+        public const string AddChocolate = "insert into \"Chocolate\"(\"Name\", \"Cost\", \"ProductDate\", \"BestBefore\", \"Weight\", \"CompanyId\", \"TypeId\") values (@Name, @Cost, @ProductDate, @BestBefore, @Weight, @CompanyId, @TypeId) returning \"Id\";";
         public const string AddChocolateAdditives = "insert into \"Chocolate_Additive\"(\"ChocolateId\",\"AdditiveId\") values (@ChocolateId,@AdditiveId)";
     }
 }
