@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChocolateShop.Core.Dots
+namespace ChocolateShop.Core.Dtos
 {
     public class ChocolateDto
     {

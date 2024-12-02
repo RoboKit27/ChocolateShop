@@ -1,5 +1,5 @@
 ﻿using ChocolateShop.Core;
-using ChocolateShop.Core.Dots;
+using ChocolateShop.Core.Dtos;
 using ChocolateShop.DAL.Queries;
 using Dapper;
 using Npgsql;

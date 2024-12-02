@@ -1,4 +1,4 @@
-﻿using ChocolateShop.Core.Dots;
+﻿using ChocolateShop.Core.Dtos;
 using ChocolateShop.DAL;
 
 namespace ForTests
@@ -7,7 +7,9 @@ namespace ForTests
     {
         static void Main(string[] args)
         {
-            
+            ClientRepository repository = new ClientRepository();
+            ClientDto client = repository.GetClientById(3);
+            Console.WriteLine($"{client.Id} - {client.Name} - {client.Phone} - {client.Gmail}");
         }
     }
 }
