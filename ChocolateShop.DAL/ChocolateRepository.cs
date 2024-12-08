@@ -63,7 +63,10 @@ namespace ChocolateShop.DAL
                 query = ChocolateQueries.AddChocolateAdditives;
                 foreach (int additiveId in AdditivesId)
                 {
-                    var additiveParam = new { ChocolateId=ChocolateId, AdditiveId=additiveId };
+                    var additiveParam = new { 
+                        ChocolateId=ChocolateId, 
+                        AdditiveId=additiveId 
+                    };
                     connection.Query(query, additiveParam);
                 }
 
