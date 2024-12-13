@@ -5,6 +5,7 @@ create table "Client"(
 	"FirstName" character varying(50) null,
 	"LastName" character varying(50) null,
 	"Phone" character varying(50) not null,
+	"Password" character varying(50) not null,
 	"Email" character varying(50) null
 );
 
@@ -18,6 +19,7 @@ create table "User"(
 	"FirstName" character varying(50) null,
 	"LastName" character varying(50) null,
 	"Phone" character varying(50) not null,
+	"Password" character varying(50) not null,
 	"RoleId" integer not null,
 	foreign key ("RoleId") references "Role"("Id")
 );
