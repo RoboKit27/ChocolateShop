@@ -25,6 +25,7 @@ namespace ChocolateShop.DAL
                 return result;
             }
         }
+
         public OrderDto GetOrderById(int id)
         {
             using (var connection = new NpgsqlConnection(Options.ConnectionString))
@@ -35,10 +36,10 @@ namespace ChocolateShop.DAL
                 var param = new { Id = id };
                 OrderDto result = connection.QueryFirst<OrderDto>(query, param);
 
-                query = OrderQueries.GetOrderClientQuery;
+                query = OrderQueries.GetOrderClientByOrderIdQuery;
                 result.Client = connection.QueryFirst<ClientDto>(query, param);
                 
-                query = OrderQueries.GetOrderChocolatesQuery;
+                query = OrderQueries.GetOrderChocolatesByOrderIdQuery;
                 List<int> chocolatesId = connection.Query<int>(query, param).ToList();
 
                 decimal cost = 0;
@@ -57,6 +58,7 @@ namespace ChocolateShop.DAL
                 return result;
             }
         }
+
         public void AddOrder(string orderDate, int clientId, List<int> chocolates)
         {
             using (var connection = new NpgsqlConnection(Options.ConnectionString))
@@ -81,7 +83,6 @@ namespace ChocolateShop.DAL
                     };
                     connection.Query(query, chocolateParam);
                 }
-
             }
         }
     }

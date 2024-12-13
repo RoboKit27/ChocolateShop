@@ -2,9 +2,10 @@
 
 create table "Client"(
 	"Id" serial primary key,
-	"Name" character varying(50) null,
+	"FirstName" character varying(50) null,
+	"LastName" character varying(50) null,
 	"Phone" character varying(50) not null,
-	"Gmail" character varying(50) null
+	"Email" character varying(50) null
 );
 
 create table "Role"(
@@ -14,7 +15,9 @@ create table "Role"(
 
 create table "User"(
 	"Id" serial primary key,
-	"Name" character varying(50) null,
+	"FirstName" character varying(50) null,
+	"LastName" character varying(50) null,
+	"Phone" character varying(50) not null,
 	"RoleId" integer not null,
 	foreign key ("RoleId") references "Role"("Id")
 );
@@ -41,8 +44,7 @@ create table "Chocolate"(
 	"Id" serial primary key,
 	"Name" character varying(50) not null,
 	"Cost" integer not null,
-	"ProductDate" character varying(50) not null,
-	"BestBefore" integer not null,
+	"StorageTime" integer not null,
 	"Weight" integer not null,
 	"CompanyId" integer not null,
 	"TypeId" integer not null,
