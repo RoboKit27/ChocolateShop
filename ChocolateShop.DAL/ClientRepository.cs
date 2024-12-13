@@ -54,6 +54,7 @@ namespace ChocolateShop.DAL
                     FirstName=client.FirstName,
                     LastName=client.LastName,
                     Phone=client.Phone,
+                    Password=client.Password,
                     Email=client.Email
                 };
                 connection.Query(query, param);
