@@ -27,6 +27,7 @@ namespace ChocolateShop.DAL
                 return result;
             }
         }
+
         public ClientDto GetClientById(int id)
         {
             using (var connection = new NpgsqlConnection(Options.ConnectionString))
@@ -40,6 +41,7 @@ namespace ChocolateShop.DAL
                 return result;
             }
         }
+
         public void AddClient(ClientDto client)
         {
             using (var connection = new NpgsqlConnection(Options.ConnectionString))
@@ -49,9 +51,10 @@ namespace ChocolateShop.DAL
                 string query = ClientQueries.AddClientQuery;
                 var param = new
                 {
-                    Name=client.Name,
+                    FirstName=client.FirstName,
+                    LastName=client.LastName,
                     Phone=client.Phone,
-                    Gmail=client.Gmail
+                    Email=client.Email
                 };
                 connection.Query(query, param);
 
