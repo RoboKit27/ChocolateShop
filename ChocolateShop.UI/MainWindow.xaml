@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
 
         <localScreens:SearchBar Grid.Column="0" Grid.Row="0"/>
-        <localScreens:MainScreen Grid.Column="0" Grid.Row="1"/>
+        <localScreens:SearchScreen Grid.Column="0" Grid.Row="1"/>
 
     </Grid>
 </Window>
