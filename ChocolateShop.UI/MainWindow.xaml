@@ -4,9 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChocolateShop.UI"
+        xmlns:localScreens="clr-namespace:ChocolateShop.UI.Screens"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="1000" Width="1400">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="0.1*"/>
+        </Grid.RowDefinitions>
+
+        <localScreens:SearchBar Grid.Column="0" Grid.Row="0"/>
+        <localScreens:MainScreen Grid.Column="0" Grid.Row="1"/>
 
     </Grid>
 </Window>

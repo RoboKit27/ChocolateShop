@@ -8,8 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ChocolateShop.BLL\ChocolateShop.BLL.csproj" />
     <ProjectReference Include="..\ChocolateShop.Core\ChocolateShop.Core.csproj" />
     <ProjectReference Include="..\ChocolateShop.DAL\ChocolateShop.DAL.csproj" />
+    <ProjectReference Include="..\ChocolateShop.UI\ChocolateShop.UI.csproj" />
   </ItemGroup>
 
 </Project>
