@@ -8,10 +8,10 @@ namespace ChocolateShop.DAL.Queries
 {
     public static class ClientQueries
     {
-        public const string GetAllClientsQuery = "select \"Id\", \"Name\", \"Phone\", \"Password\", \"Gmail\" from \"Client\";";
-        public const string GetClientByIdQuery = "select \"Id\", \"Name\", \"Phone\", \"Password\", \"Gmail\" from \"Client\" where \"Id\"=@Id;";
+        public const string GetAllClientsQuery = "select \"Id\", \"FirstName\", \"LastName\", \"Phone\", \"Password\", \"Email\" from \"Client\";";
+        public const string GetClientByIdQuery = "select \"Id\", \"FirstName\", \"LastName\", \"Phone\", \"Password\", \"Email\" from \"Client\" where \"Id\"=@Id;";
 
-        public const string AddClientQuery = "insert into \"Client\"(\"Name\",\"Phone\",\"Password\",\"Gmail\") values(@Name, @Phone, @Password, @Gmail)";
+        public const string AddClientQuery = "insert into \"Client\"(\"FirstName\",\"LastName\",\"Phone\",\"Password\",\"Email\") values(@FirstName, @LastName, @Phone, @Password, @Email)";
 
     }
 }
