@@ -3,13 +3,6 @@ using ChocolateShop.Core.Dtos;
 using ChocolateShop.DAL.Queries;
 using Dapper;
 using Npgsql;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChocolateShop.DAL
 {
@@ -51,11 +44,11 @@ namespace ChocolateShop.DAL
                 string query = ClientQueries.AddClientQuery;
                 var param = new
                 {
-                    FirstName=client.FirstName,
-                    LastName=client.LastName,
-                    Phone=client.Phone,
-                    Password=client.Password,
-                    Email=client.Email
+                    FirstName = client.FirstName,
+                    LastName = client.LastName,
+                    Phone = client.Phone,
+                    Password = client.Password,
+                    Email = client.Email
                 };
                 connection.Query(query, param);
 
