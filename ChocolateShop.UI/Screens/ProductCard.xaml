@@ -13,7 +13,7 @@
             <RowDefinition Height="0.2*"/>
         </Grid.RowDefinitions>
 
-        <Rectangle Fill="Gray" Grid.Row="0" Grid.RowSpan="3" RadiusX="15" RadiusY="15"/>
+        <Rectangle Fill="Black" Grid.Row="0" Grid.RowSpan="3" RadiusX="15" RadiusY="15"/>
         <Rectangle Fill="White" Grid.Row="0" Grid.RowSpan="3" Margin="2" RadiusX="15" RadiusY="15"/>
         <Rectangle Fill="Orange" Grid.Row="0" Margin="6" RadiusX="15" RadiusY="15"/>
         <Label Grid.Row="1" Content="Шоколадка" Margin="6 2 2 2" FontFamily="Cascadia Code" FontSize="20"/>

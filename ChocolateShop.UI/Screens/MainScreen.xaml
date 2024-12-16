@@ -8,6 +8,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="920" d:DesignWidth="1920">
     <Grid>
-        <localRegisterScreens:RegisteredScreen/>
+        <localRegisterScreens:UnregisteredScreen/>
     </Grid>
 </UserControl>

@@ -1,17 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows.Controls;
 
 namespace ChocolateShop.UI.Screens
 {
@@ -23,41 +10,41 @@ namespace ChocolateShop.UI.Screens
         public SearchScreen()
         {
             InitializeComponent();
-            this.AddPopularFilter();
-            this.AddCostFilter();
+            this.AddSortFilter("По популярности");
+            this.AddSortFilter("По цене");
         }
 
         public void AddCompanyFilter(string companyFilter)
         {
-            StackPanelCompanyFilters.Children.Add(new FilterCheckBox(companyFilter)
-            {
-                OnSymbol="❌"
-            });
-        }
-        public void AddTypeFilter(string typeFilter)
-        {
-            StackPanelTypeFilters.Children.Add(new FilterCheckBox(typeFilter)
+            StackPanelCompanyField.Children.Add(new FilterCheckBox(companyFilter)
             {
                 OnSymbol = "❌"
             });
         }
-        public void AddPopularFilter()
+        
+        public void AddTypeFilter(string typeFilter)
         {
-            var filter = new FilterCheckBox("По популярности")
+            StackPanelTypeField.Children.Add(new FilterCheckBox(typeFilter)
             {
-                OnSymbol = "🔺",
-                OffSymbol = "🔻"
-            };
-            StackPanelOtherFilters.Children.Add(filter);
-            filter.Show();
+                OnSymbol = "❌"
+            });
         }
-        public void AddCostFilter()
+        
+        public void AddSortFilter(string name)
         {
-            var filter = new FilterCheckBox("По цене")
+            var filter = new FilterCheckBox(name)
             {
                 OnSymbol = "🔺",
                 OffSymbol = "🔻"
             };
+            if (StackPanelOtherFilters.Children.Count == 0)
+            {
+                filter.Margin = new(3, 0, 0, 0);
+            }
+            else
+            {
+                filter.Margin = new(-60, 0, 0, 0);
+            }
             StackPanelOtherFilters.Children.Add(filter);
             filter.Show();
         }
