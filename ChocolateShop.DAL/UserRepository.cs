@@ -39,7 +39,7 @@ namespace ChocolateShop.DAL
                 return result;
             }
         }
-        public void AddUser(UserDto user)
+        public void AddUser(UserDto user, List<RoleDto> )
         {
             using (var connection = new NpgsqlConnection(Options.ConnectionString))
             {
@@ -48,12 +48,13 @@ namespace ChocolateShop.DAL
                 string query = UserQueries.AddUserQuery;
                 var param = new
                 {
-                    Name = user.Name,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Password = user.Password,
                     Phone = user.Phone
                 };
                 connection.Query(query, param);
-
             }
-        }
+        }      
     }
 }
