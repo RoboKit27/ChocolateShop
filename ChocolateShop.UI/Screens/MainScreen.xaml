@@ -7,7 +7,6 @@
              xmlns:localRegisterScreens="clr-namespace:ChocolateShop.UI.Screens.RegisterMainScreens"
              mc:Ignorable="d" 
              d:DesignHeight="920" d:DesignWidth="1920">
-    <Grid>
-        <localRegisterScreens:UnregisteredScreen/>
+    <Grid Name="GridScreen">
     </Grid>
 </UserControl>

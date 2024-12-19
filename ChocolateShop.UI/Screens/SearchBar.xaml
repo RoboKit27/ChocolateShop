@@ -56,8 +56,8 @@
         <Button Name="ButtonBackMain" Background="Orange" Grid.Column="0" Click="ButtonBackMain_Click">
             <Image Source="S:\CodePrograms\C#\IT-Method\ChocolateShop\ChocolateShop.UI\Images\home_icon.png"/>
         </Button>
-        <TextBox Name="TextBoxSearch" Background="White" FontSize="32" Foreground="Black" FontFamily="Cascadia Code" Grid.Column="1" Style="{StaticResource PlaceholderTextBoxStyle}" Tag="Search..." TextChanged="TextBoxSearch_TextChanged"/>
-        <Button Name="ButtonSearch" Background="Orange" Grid.Column="2">
+        <TextBox Name="TextBoxSearch" Background="White" FontSize="32" Foreground="Black" FontFamily="Cascadia Code" Grid.Column="1" Style="{StaticResource PlaceholderTextBoxStyle}" Tag="Search..."/>
+        <Button Name="ButtonSearch" Background="Orange" Grid.Column="2" Click="ButtonSearch_Click">
             <Image Source="S:\CodePrograms\C#\IT-Method\ChocolateShop\ChocolateShop.UI\Images\search_icon.png" Margin="4"/>
         </Button>
         <Button Name="ButtonProfile" Background="Orange" Grid.Column="3">

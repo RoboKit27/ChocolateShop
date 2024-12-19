@@ -3,6 +3,7 @@ using ChocolateShop.Core.Dtos;
 using ChocolateShop.DAL.Queries;
 using Dapper;
 using Npgsql;
+using System.ComponentModel.Design;
 
 namespace ChocolateShop.DAL
 {
@@ -70,7 +71,32 @@ namespace ChocolateShop.DAL
                     };
                     connection.Query(query, additiveParam);
                 }
+            }
+        }
 
+        public List<CompanyDto> GetAllChocolateCompanies()
+        {
+            using (var connection = new NpgsqlConnection(Options.ConnectionString))
+            {
+                connection.Open();
+
+                string query = ChocolateQueries.GetAllChocolateCompaniesQuery;
+                List<CompanyDto> result = connection.Query<CompanyDto>(query).ToList();
+
+                return result;
+            }
+        }
+        
+        public List<TypeDto> GetAllChocolateTypes()
+        {
+            using (var connection = new NpgsqlConnection(Options.ConnectionString))
+            {
+                connection.Open();
+
+                string query = ChocolateQueries.GetAllChocolateTypesQuery;
+                List<TypeDto> result = connection.Query<TypeDto>(query).ToList();
+
+                return result;
             }
         }
     }

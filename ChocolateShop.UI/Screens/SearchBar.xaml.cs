@@ -18,22 +18,23 @@ namespace ChocolateShop.UI.Screens
             this.mainWindow = mainWindow;
         }
 
-        private void TextBoxSearch_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (TextBoxSearch.Text != "Search..." && this.mainWindow.ScreenName != "SearchScreen")
-            {
-                this.mainWindow.SetScreen(new SearchScreen());
-            }
-        }
         private void ButtonBackMain_Click(object sender, RoutedEventArgs e)
         {
             if (this.mainWindow.ScreenName != "MainScreen")
             {
-                this.mainWindow.SetScreen(new MainScreen());
-                if (TextBoxSearch.Text != "Search...")
+                if (TextBoxSearch.Text != "")
                 {
-                    TextBoxSearch.Text = "Search...";
+                    TextBoxSearch.Text = "";
                 }
+                this.mainWindow.SetScreen(new MainScreen());
+            }
+        }
+
+        private void ButtonSearch_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.mainWindow.ScreenName != "SearchScreen")
+            {
+                this.mainWindow.SetScreen(new SearchScreen(this));
             }
         }
     }

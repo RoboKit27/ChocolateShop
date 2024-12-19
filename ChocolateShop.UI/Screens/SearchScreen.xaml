@@ -43,6 +43,8 @@
             </StackPanel>
         </ScrollViewer>
         <StackPanel Name="StackPanelOtherFilters" Grid.Column="1" Orientation="Horizontal"/>
-        <WrapPanel Name="WrapPanelSearchChocolates" Grid.Column="1" Grid.Row="1"/>
+        <ScrollViewer Grid.Column="1" Grid.Row="1">
+            <WrapPanel Name="WrapPanelSearchChocolates"/>
+        </ScrollViewer>    
     </Grid>
 </UserControl>

@@ -8,4 +8,9 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ChocolateShop.BLL\ChocolateShop.BLL.csproj" />
+    <ProjectReference Include="..\ChocolateShop.Core\ChocolateShop.Core.csproj" />
+  </ItemGroup>
+
 </Project>
