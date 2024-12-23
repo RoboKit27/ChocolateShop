@@ -1,13 +1,8 @@
-﻿using ChocolateShop.Core.Dtos;
-using ChocolateShop.Core;
-using Npgsql;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ChocolateShop.Core;
+using ChocolateShop.Core.Dtos;
 using ChocolateShop.DAL.Queries;
 using Dapper;
+using Npgsql;
 
 namespace ChocolateShop.DAL
 {
@@ -15,7 +10,7 @@ namespace ChocolateShop.DAL
     {
         public List<OrderDto> GetAllOrders()
         {
-            using(var connection = new NpgsqlConnection(Options.ConnectionString))
+            using (var connection = new NpgsqlConnection(Options.ConnectionString))
             {
                 connection.Open();
 
@@ -37,7 +32,7 @@ namespace ChocolateShop.DAL
 
                 query = OrderQueries.GetOrderClientQuery;
                 result.Client = connection.QueryFirst<ClientDto>(query, param);
-                
+
                 query = OrderQueries.GetOrderChocolatesQuery;
                 List<int> chocolatesId = connection.Query<int>(query, param).ToList();
 
@@ -66,8 +61,8 @@ namespace ChocolateShop.DAL
                 string query = OrderQueries.AddOrderQuery;
                 var param = new
                 {
-                    Date=orderDate,
-                    ClientId=clientId
+                    Date = orderDate,
+                    ClientId = clientId
                 };
                 int orderId = connection.QueryFirst<int>(query, param);
 
@@ -76,8 +71,8 @@ namespace ChocolateShop.DAL
                 {
                     var chocolateParam = new
                     {
-                        OrderId=orderId,
-                        ChocolateId=chocolateId
+                        OrderId = orderId,
+                        ChocolateId = chocolateId
                     };
                     connection.Query(query, chocolateParam);
                 }
