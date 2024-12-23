@@ -13,6 +13,6 @@ namespace ChocolateShop.Core.Dtos
         public string? LastName { get; set; }
         public string Phone { get; set; }
         public int Password { get; set; }
-        public RoleDto Role { get; set; }
+        public RoleDto RoleId { get; set; }
     }
 }

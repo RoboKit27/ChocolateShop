@@ -3,13 +3,6 @@ using ChocolateShop.Core.Dtos;
 using ChocolateShop.DAL.Queries;
 using Dapper;
 using Npgsql;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
 namespace ChocolateShop.DAL
 {
     internal class UserRepository
@@ -39,7 +32,7 @@ namespace ChocolateShop.DAL
                 return result;
             }
         }
-        public void AddUser(UserDto user, List<RoleDto> )
+        public void AddUser(UserDto user)
         {
             using (var connection = new NpgsqlConnection(Options.ConnectionString))
             {
@@ -51,10 +44,28 @@ namespace ChocolateShop.DAL
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     Password = user.Password,
-                    Phone = user.Phone
+                    Phone = user.Phone,
                 };
                 connection.Query(query, param);
             }
-        }      
+        }
+        public List<UserDto> GetRole()
+        {
+            string conectionString = Options.ConnectionString;
+            using (var connection = new NpgsqlConnection(Options.ConnectionString))
+            {
+                string query = UserQueries.GetRoleQuery;
+                connection.Open();
+                List<UserDto> result = connection.Query<UserDto, RoleDto, UserDto>(query,
+                    (user, role) =>
+                    {
+                        user.RoleId = role;
+                        return user;
+                    },
+                    splitOn:"Id").ToList();
+                return result;
+            }
+        } 
     }
 }
+
