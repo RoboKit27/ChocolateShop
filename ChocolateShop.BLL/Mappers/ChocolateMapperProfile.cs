@@ -13,7 +13,8 @@ namespace ChocolateShop.BLL.Mappers
     {
         public ChocolateMapperProfile()
         {
-            CreateMap<ChocolateDto, ChocolateOutputModel>();
+            CreateMap<ChocolateDto, ChocolateOutputModel>().ForMember(
+            dist=>dist.CompanyName, opt=>opt.MapFrom(c=>c.Company.Name));
         }
     }
 }

@@ -36,6 +36,15 @@ namespace ChocolateShop.UI.Screens
             {
                 this.mainWindow.SetScreen(new SearchScreen(this));
             }
+            else
+            {
+                UserControl searchScreen = this.mainWindow.GetScreen();
+                if (searchScreen != null)
+                {
+                    SearchScreen screen = (SearchScreen)searchScreen;
+                    screen.Update();
+                }
+            }
         }
     }
 }

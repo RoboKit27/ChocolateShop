@@ -1,5 +1,4 @@
 ﻿using ChocolateShop.BLL;
-using ChocolateShop.Core.Dtos;
 using ChocolateShop.Core.OutputModels;
 using ChocolateShop.UI.Windows;
 using System.Windows.Controls;
@@ -69,6 +68,7 @@ namespace ChocolateShop.UI.Screens
 
         public void LoadCompanyFilters()
         {
+            StackPanelCompanyField.Children.Clear();
             List<CompanyOutputModel> outputModels = this._chocolateManager.GetAllCompanies();
             foreach (CompanyOutputModel company in outputModels)
             {
@@ -78,6 +78,7 @@ namespace ChocolateShop.UI.Screens
 
         public void LoadTypeFilters()
         {
+            StackPanelTypeField.Children.Clear();
             List<TypeOutputModel> outputModels = this._chocolateManager.GetAllTypes();
             foreach (TypeOutputModel type in outputModels)
             {
@@ -87,29 +88,67 @@ namespace ChocolateShop.UI.Screens
 
         public void LoadChocolateCards()
         {
-            List<ChocolateOutputModel> outputModels = this._chocolateManager.GetAllChocolates();
-            List<ChocolateOutputModel> filteredOutputModels = this.FilteringChocolates(outputModels);
-            foreach (ChocolateOutputModel chocolate in outputModels)
+            WrapPanelSearchChocolates.Children.Clear();
+            List<ChocolateOutputModel> filteredOutputModels = this.FilteringChocolates();
+            foreach (ChocolateOutputModel chocolate in filteredOutputModels)
             {
                 this.AddChocolateCard(chocolate);
             }
         }
 
-        public List<ChocolateOutputModel> FilteringChocolates(List<ChocolateOutputModel> allChocolates)
+        public List<FilterCheckBox> GetCompanyEnabledFilters()
         {
-            var result = new List<ChocolateOutputModel>();
-            if (this._searchBar.TextBoxSearch.Text.ToLower().StartsWith("id:"))
+            List<FilterCheckBox> result = new List<FilterCheckBox>();
+            foreach (var companyFilter in StackPanelCompanyField.Children)
             {
-                int expectedId = Convert.ToInt32(this._searchBar.TextBoxSearch.Text.ToLower().Split(":")[1]);
-                foreach (ChocolateOutputModel chocolate in allChocolates)
+                if (companyFilter.GetType().ToString().Split()[0] == "FilterCheckBox")
                 {
-                    if (chocolate.Id == expectedId)
+                    if (((FilterCheckBox)companyFilter).IsEnable)
                     {
-                        result.Add(chocolate);
+                        result.Add((FilterCheckBox)companyFilter);
                     }
                 }
             }
             return result;
+        }
+
+        public List<ChocolateOutputModel> FilteringChocolates()
+        {
+            var result = this._chocolateManager.GetAllChocolates();
+            if (this._searchBar.TextBoxSearch.Text.ToLower().StartsWith("id:"))
+            {
+                int expectedId = Convert.ToInt32(this._searchBar.TextBoxSearch.Text.ToLower().Split(":")[1]);
+                foreach (ChocolateOutputModel chocolate in result)
+                {
+                    if (chocolate.Id != expectedId)
+                    {
+                        result.Remove(chocolate);
+                    }
+                }
+            }
+            else {
+                if (this.GetCompanyEnabledFilters().Count != 0)
+                {
+                    var companyFilters = this.GetCompanyEnabledFilters();
+                    foreach (ChocolateOutputModel chocolate in result)
+                    {
+                        foreach (FilterCheckBox companyFilter in companyFilters)
+                        {
+                            if (chocolate.CompanyName != companyFilter.Name)
+                            {
+                                result.Remove(chocolate);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+
+        public void Update()
+        {
+            this.LoadChocolateCards();
         }
 
     }

@@ -41,5 +41,17 @@ namespace ChocolateShop.UI
             ScreenPlace.Children.Clear();
             ScreenPlace.Children.Add(screen);
         }
+        
+        public UserControl GetScreen()
+        {
+            if (ScreenPlace.Children.Count != 0)
+            {
+                return (UserControl)ScreenPlace.Children[0];
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }
