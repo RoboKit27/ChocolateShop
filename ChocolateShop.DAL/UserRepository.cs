@@ -7,18 +7,18 @@ namespace ChocolateShop.DAL
 {
     internal class UserRepository
     {
-        public List<UserDto> GetAllUsers()
-        {
-            using (var connection = new NpgsqlConnection(Options.ConnectionString))
-            {
-                connection.Open();
+        //public List<UserDto> GetAllUsers()
+        //{
+        //    using (var connection = new NpgsqlConnection(Options.ConnectionString))
+        //    {
+        //        connection.Open();
 
-                string query = UserQueries.GetAllUsersQuery;
-                List<UserDto> result = connection.Query<UserDto>(query).ToList();
+        //        string query = UserQueries.GetAllUsersQuery;
+        //        List<UserDto> result = connection.Query<UserDto>(query).ToList();
 
-                return result;
-            }
-        }
+        //        return result;
+        //    }
+        //}
         public UserDto GetUserById(int UserId)
         {
             using (var connection = new NpgsqlConnection(Options.ConnectionString))
@@ -45,11 +45,12 @@ namespace ChocolateShop.DAL
                     LastName = user.LastName,
                     Password = user.Password,
                     Phone = user.Phone,
+                    RoleTd = user.RoleId
                 };
                 connection.Query(query, param);
             }
         }
-        public List<UserDto> GetRole()
+        public List<UserDto> GetAllUsers()
         {
             string conectionString = Options.ConnectionString;
             using (var connection = new NpgsqlConnection(Options.ConnectionString))
@@ -59,7 +60,7 @@ namespace ChocolateShop.DAL
                 List<UserDto> result = connection.Query<UserDto, RoleDto, UserDto>(query,
                     (user, role) =>
                     {
-                        user.RoleId = role;
+                        user.Role = role;
                         return user;
                     },
                     splitOn:"Id").ToList();
