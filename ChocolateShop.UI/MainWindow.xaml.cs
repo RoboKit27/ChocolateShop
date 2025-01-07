@@ -1,5 +1,10 @@
 ﻿using ChocolateShop.UI.Screens;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -7,7 +12,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace ChocolateShop.UI
@@ -17,41 +21,23 @@ namespace ChocolateShop.UI
     /// </summary>
     public partial class MainWindow : Window
     {
-
-        public string ScreenName { get; set; }
-
         public MainWindow()
         {
             InitializeComponent();
-            this.SetSearchBar();
-            this.SetScreen(new MainScreen());
+            this.SetConfig();
+            ScreensStackPanel.Children.Add(ScreensKeeper.SearchBar);
+            ScreensStackPanel.Children.Add(ScreensKeeper.SearchScreen);
         }
 
-        public void SetSearchBar()
+        public void SetConfig()
         {
-            var bar = new SearchBar(this);
-            Grid.SetRow(bar, 0);
-            GridScreens.Children.Add(bar);
-        }
-
-        public void SetScreen(UserControl screen)
-        {
-            List<string> newScreenName = screen.GetType().ToString().Split(".").ToList();
-            this.ScreenName = newScreenName[newScreenName.Count - 1];
-            ScreenPlace.Children.Clear();
-            ScreenPlace.Children.Add(screen);
-        }
-        
-        public UserControl GetScreen()
-        {
-            if (ScreenPlace.Children.Count != 0)
-            {
-                return (UserControl)ScreenPlace.Children[0];
-            }
-            else
-            {
-                return null;
-            }
+            ScreensKeeper.MainWindow = this;
+            ScreensKeeper.SearchBar.Width = 1920;
+            ScreensKeeper.SearchBar.Height = 50;
+            ScreensKeeper.SearchScreen.Width = 1920;
+            ScreensKeeper.SearchScreen.Height = 966;
+            ScreensKeeper.MainScreen.Width = 1920;
+            ScreensKeeper.MainScreen.Height = 966;
         }
     }
 }

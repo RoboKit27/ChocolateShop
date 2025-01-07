@@ -9,6 +9,5 @@ namespace ChocolateShop.Core
     public static class Options
     {
         public const string ConnectionString = "Server=localhost;Port=5432;User Id=postgres;Password=hanlinger;Database=chocolate-shop";
-        public static bool RegisteredClient = false;
     }
 }

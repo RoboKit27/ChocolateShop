@@ -12,19 +12,19 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type TextBox}">
                         <Border x:Name="border"
-                        Padding="{TemplateBinding Padding}"
-                        Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        SnapsToDevicePixels="True">
+                    Padding="{TemplateBinding Padding}"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    SnapsToDevicePixels="True">
                             <Grid>
                                 <ScrollViewer x:Name="PART_ContentHost" />
                                 <TextBlock x:Name="textBlock"
-                                   Margin="2,0,0,0"
-                                   Foreground="Gray"
-                                   IsHitTestVisible="False"
-                                   Text="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}"
-                                   Visibility="Collapsed" />
+                               Margin="2,0,0,0"
+                               Foreground="Gray"
+                               IsHitTestVisible="False"
+                               Text="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}"
+                               Visibility="Collapsed" />
                             </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -46,21 +46,21 @@
             </Setter>
         </Style>
     </UserControl.Resources>
-    <Grid>
+    <Grid Background="White">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="50"/>
-            <ColumnDefinition Width="0.2*"/>
+            <ColumnDefinition Width="0.1*"/>
             <ColumnDefinition Width="50"/>
             <ColumnDefinition Width="50"/>
         </Grid.ColumnDefinitions>
-        <Button Name="ButtonBackMain" Background="Orange" Grid.Column="0" Click="ButtonBackMain_Click">
+        <Button Name="ButtonHome" BorderBrush="Black" BorderThickness="2" Background="White">
             <Image Source="S:\CodePrograms\C#\IT-Method\ChocolateShop\ChocolateShop.UI\Images\home_icon.png"/>
         </Button>
-        <TextBox Name="TextBoxSearch" Background="White" FontSize="32" Foreground="Black" FontFamily="Cascadia Code" Grid.Column="1" Style="{StaticResource PlaceholderTextBoxStyle}" Tag="Search..."/>
-        <Button Name="ButtonSearch" Background="Orange" Grid.Column="2" Click="ButtonSearch_Click">
-            <Image Source="S:\CodePrograms\C#\IT-Method\ChocolateShop\ChocolateShop.UI\Images\search_icon.png" Margin="4"/>
+        <TextBox Name="TextBoxSearch" Grid.Column="1" FontSize="32" BorderBrush="Black" BorderThickness="2"  Style="{StaticResource PlaceholderTextBoxStyle}" Tag="Search..."/>
+        <Button Name="ButtonSearch" Grid.Column="2" BorderBrush="Black" BorderThickness="2" Background="White" Click="ButtonSearch_Click">
+            <Image Source="S:\CodePrograms\C#\IT-Method\ChocolateShop\ChocolateShop.UI\Images\search_icon.png" Margin="2"/>
         </Button>
-        <Button Name="ButtonProfile" Background="Orange" Grid.Column="3">
+        <Button Name="ButtonProfile" Grid.Column="3" BorderBrush="Black" BorderThickness="2" Background="White">
             <Image Source="S:\CodePrograms\C#\IT-Method\ChocolateShop\ChocolateShop.UI\Images\profile_icon.png"/>
         </Button>
     </Grid>

@@ -1,7 +1,10 @@
 ﻿using ChocolateShop.BLL;
 using ChocolateShop.Core.OutputModels;
-using ChocolateShop.UI.Windows;
+using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 
 namespace ChocolateShop.UI.Screens
 {
@@ -12,144 +15,275 @@ namespace ChocolateShop.UI.Screens
     {
 
         private ChocolateManager _chocolateManager;
-        private SearchBar _searchBar;
+        private Brush _unvisibleColor;
 
-        public SearchScreen(SearchBar searchBar)
+        public SearchScreen()
         {
-            this._chocolateManager = new ChocolateManager();
+            _chocolateManager = new ChocolateManager();
             InitializeComponent();
-            this._searchBar = searchBar;
-            this.AddSortFilter("По популярности");
-            this.AddSortFilter("По цене");
+            this._unvisibleColor = LabelNotFound.Foreground;
+            this.InitilizeSortFilters();
             this.LoadCompanyFilters();
             this.LoadTypeFilters();
-            this.LoadChocolateCards();
+            this.LoadCountryFilters();
         }
 
-        public void AddCompanyFilter(string companyFilter)
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
-            StackPanelCompanyField.Children.Add(new FilterCheckBox(companyFilter)
-            {
-                OnSymbol = "❌"
-            });
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
 
-        public void AddTypeFilter(string typeFilter)
+        public void InitilizeSortFilters()
         {
-            StackPanelTypeField.Children.Add(new FilterCheckBox(typeFilter)
-            {
-                OnSymbol = "❌"
-            });
-        }
-
-        public void AddSortFilter(string name)
-        {
-            var filter = new FilterCheckBox(name)
+            var popularFilter = new FilterCheckBox("По популярности")
             {
                 OnSymbol = "🔺",
                 OffSymbol = "🔻"
             };
-            if (StackPanelOtherFilters.Children.Count == 0)
-            {
-                filter.Margin = new(3, 0, 0, 0);
-            }
-            else
-            {
-                filter.Margin = new(-60, 0, 0, 0);
-            }
-            StackPanelOtherFilters.Children.Add(filter);
-            filter.Show();
-        }
+            popularFilter.Margin = new Thickness(4, 0, 0, 0);
+            PopularFilterBorder.Child = popularFilter;
+            popularFilter.Show();
 
-        public void AddChocolateCard(ChocolateOutputModel chocolate)
-        {
-            WrapPanelSearchChocolates.Children.Add(new ProductCard(chocolate.Id, chocolate.Name, chocolate.Cost));
+            var costFilter = new FilterCheckBox("По цене")
+            {
+                OnSymbol = "🔺",
+                OffSymbol = "🔻"
+            };
+            costFilter.Margin = new Thickness(4, 0, 0, 0);
+            CostFilterBorder.Child = costFilter;
+            costFilter.Show();
         }
 
         public void LoadCompanyFilters()
         {
-            StackPanelCompanyField.Children.Clear();
+            CompanyStackPanel.Children.Clear();
+            CompanyStackPanel.Children.Add(new Label() { Content = "Компания", FontSize = 32, FontWeight = FontWeights.Bold });
             List<CompanyOutputModel> outputModels = this._chocolateManager.GetAllCompanies();
             foreach (CompanyOutputModel company in outputModels)
             {
-                this.AddCompanyFilter(company.Name);
+                var filter = new FilterCheckBox(company.Name)
+                {
+                    OnSymbol = "❌"
+                };
+                filter.Margin = new Thickness(20, 0, 0, 2);
+                CompanyStackPanel.Children.Add(filter);
             }
         }
 
         public void LoadTypeFilters()
         {
-            StackPanelTypeField.Children.Clear();
+            ChocolateTypeStackPanel.Children.Clear();
+            ChocolateTypeStackPanel.Children.Add(new Label() { Content = "Тип шоколада", FontSize = 32, FontWeight = FontWeights.Bold });
             List<TypeOutputModel> outputModels = this._chocolateManager.GetAllTypes();
             foreach (TypeOutputModel type in outputModels)
             {
-                this.AddTypeFilter(type.Name);
-            }
-        }
-
-        public void LoadChocolateCards()
-        {
-            WrapPanelSearchChocolates.Children.Clear();
-            List<ChocolateOutputModel> filteredOutputModels = this.FilteringChocolates();
-            foreach (ChocolateOutputModel chocolate in filteredOutputModels)
-            {
-                this.AddChocolateCard(chocolate);
-            }
-        }
-
-        public List<FilterCheckBox> GetCompanyEnabledFilters()
-        {
-            List<FilterCheckBox> result = new List<FilterCheckBox>();
-            foreach (var companyFilter in StackPanelCompanyField.Children)
-            {
-                if (companyFilter.GetType().ToString().Split()[0] == "FilterCheckBox")
+                var filter = new FilterCheckBox(type.Name)
                 {
-                    if (((FilterCheckBox)companyFilter).IsEnable)
+                    OnSymbol = "❌"
+                };
+                filter.Margin = new Thickness(20, 0, 0, 2);
+                ChocolateTypeStackPanel.Children.Add(filter);
+            }
+        }
+
+        public void LoadCountryFilters()
+        {
+            CountryStackPanel.Children.Clear();
+            CountryStackPanel.Children.Add(new Label() { Content = "Страна", FontSize = 32, FontWeight = FontWeights.Bold });
+            List<CountryOutputModel> outputModels = this._chocolateManager.GetAllCountries();
+            foreach (CountryOutputModel country in outputModels)
+            {
+                var filter = new FilterCheckBox(country.Name)
+                {
+                    OnSymbol = "❌"
+                };
+                filter.Margin = new Thickness(20, 0, 0, 2);
+                CountryStackPanel.Children.Add(filter);
+            }
+        }
+
+        public List<ChocolateOutputModel> FilterChocolatesByName(List<ChocolateOutputModel> given)
+        {
+            if (ScreensKeeper.SearchBar.TextBoxSearch.Text.Length > 0)
+            {
+                var result = new List<ChocolateOutputModel>();
+                foreach (ChocolateOutputModel chocolate in given)
+                {
+                    if (chocolate.Name.ToLower().StartsWith(ScreensKeeper.SearchBar.TextBoxSearch.Text.ToLower()))
                     {
-                        result.Add((FilterCheckBox)companyFilter);
+                        result.Add(chocolate);
+                    }
+                }
+                return result;
+            }
+            else
+            {
+                return given;
+            }
+        }
+
+        public List<ChocolateOutputModel> FilterChocolatesByCompany(List<ChocolateOutputModel> given)
+        {
+            var enabledCompanies = this.GetEnabledCompanyFilters();
+            if (enabledCompanies.Count > 0)
+            {
+                var result = new List<ChocolateOutputModel>();
+                foreach (ChocolateOutputModel chocolate in given)
+                {
+                    if (enabledCompanies.IndexOf(chocolate.Company) != -1)
+                    {
+                        result.Add(chocolate);
+                    }
+                }
+                return result;
+            }
+            else
+            {
+                return given;
+            }
+        }
+
+        public List<ChocolateOutputModel> FilterChocolatesByType(List<ChocolateOutputModel> given)
+        {
+            var enabledTypes = this.GetEnabledTypeFilters();
+            if (enabledTypes.Count > 0)
+            {
+                var result = new List<ChocolateOutputModel>();
+                foreach (ChocolateOutputModel chocolate in given)
+                {
+                    if (enabledTypes.IndexOf(chocolate.Type) != -1)
+                    {
+                        result.Add(chocolate);
+                    }
+                }
+                return result;
+            }
+            else
+            {
+                return given;
+            }
+        }
+
+        public List<ChocolateOutputModel> FilterChocolatesByCountry(List<ChocolateOutputModel> given)
+        {
+            var enabledCountries = this.GetEnabledCountryFilters();
+            if (enabledCountries.Count > 0)
+            {
+                var result = new List<ChocolateOutputModel>();
+                foreach (ChocolateOutputModel chocolate in given)
+                {
+                    if (enabledCountries.IndexOf(chocolate.Country) != -1)
+                    {
+                        result.Add(chocolate);
+                    }
+                }
+                return result;
+            }
+            else
+            {
+                return given;
+            }
+        }
+
+        public List<ChocolateOutputModel> FilterChocolatesByCost(List<ChocolateOutputModel> given)
+        {
+            if (TextBoxMinCost.Text != "" && TextBoxMaxCost.Text != "")
+            {
+                var result = new List<ChocolateOutputModel>();
+                decimal minCost = Convert.ToDecimal(TextBoxMinCost.Text);
+                decimal maxCost = Convert.ToDecimal(TextBoxMaxCost.Text);
+                foreach (ChocolateOutputModel chocolate in given)
+                {
+                    if (chocolate.Cost >= minCost && chocolate.Cost <= maxCost)
+                    {
+                        result.Add(chocolate);
+                    }
+                }
+                return result;
+            }
+            else
+            {
+                return given;
+            }
+        }
+
+        public List<string> GetEnabledCompanyFilters()
+        {
+            var result = new List<string>();
+            foreach (UIElement element in CompanyStackPanel.Children)
+            {
+                if (CompanyStackPanel.Children.IndexOf(element) != 0)
+                {
+                    var filter = (FilterCheckBox)((UserControl)element);
+                    if (filter.IsEnable)
+                    {
+                        result.Add(filter.FilterName);
                     }
                 }
             }
             return result;
         }
 
-        public List<ChocolateOutputModel> FilteringChocolates()
+        public List<string> GetEnabledTypeFilters()
+        {
+            var result = new List<string>();
+            foreach (UIElement element in ChocolateTypeStackPanel.Children)
+            {
+                if (ChocolateTypeStackPanel.Children.IndexOf(element) != 0)
+                {
+                    var filter = (FilterCheckBox)((UserControl)element);
+                    if (filter.IsEnable)
+                    {
+                        result.Add(filter.FilterName);
+                    }
+                }
+            }
+            return result;
+        }
+
+        public List<string> GetEnabledCountryFilters()
+        {
+            var result = new List<string>();
+            foreach (UIElement element in CountryStackPanel.Children)
+            {
+                if (CountryStackPanel.Children.IndexOf(element) != 0)
+                {
+                    var filter = (FilterCheckBox)((UserControl)element);
+                    if (filter.IsEnable)
+                    {
+                        result.Add(filter.FilterName);
+                    }
+                }
+            }
+            return result;
+        }
+
+        public void Search()
         {
             var result = this._chocolateManager.GetAllChocolates();
-            if (this._searchBar.TextBoxSearch.Text.ToLower().StartsWith("id:"))
+            result = this.FilterChocolatesByName(result);
+            result = this.FilterChocolatesByCompany(result);
+            result = this.FilterChocolatesByType(result);
+            result = this.FilterChocolatesByCountry(result);
+            result = this.FilterChocolatesByCost(result);
+            WrapPanelChocolateCards.Children.Clear();
+            if (result.Count > 0)
             {
-                int expectedId = Convert.ToInt32(this._searchBar.TextBoxSearch.Text.ToLower().Split(":")[1]);
+                LabelNotFound.Foreground = this._unvisibleColor;
                 foreach (ChocolateOutputModel chocolate in result)
                 {
-                    if (chocolate.Id != expectedId)
-                    {
-                        result.Remove(chocolate);
-                    }
+                    WrapPanelChocolateCards.Children.Add(new ProductCard(
+                        chocolate.Id,
+                        chocolate.Name,
+                        chocolate.Cost
+                    ));
                 }
             }
-            else {
-                if (this.GetCompanyEnabledFilters().Count != 0)
-                {
-                    var companyFilters = this.GetCompanyEnabledFilters();
-                    foreach (ChocolateOutputModel chocolate in result)
-                    {
-                        foreach (FilterCheckBox companyFilter in companyFilters)
-                        {
-                            if (chocolate.CompanyName != companyFilter.Name)
-                            {
-                                result.Remove(chocolate);
-                                break;
-                            }
-                        }
-                    }
-                }
+            else
+            {
+                LabelNotFound.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0));
             }
-            return result;
         }
-
-        public void Update()
-        {
-            this.LoadChocolateCards();
-        }
-
     }
 }

@@ -4,9 +4,29 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ChocolateShop.UI.Screens"
-             xmlns:localRegisterScreens="clr-namespace:ChocolateShop.UI.Screens.RegisterMainScreens"
              mc:Ignorable="d" 
-             d:DesignHeight="920" d:DesignWidth="1920">
-    <Grid Name="GridScreen">
+             d:DesignHeight="966" d:DesignWidth="1920">
+    <Grid Background="#1c1c1c">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.4*"/>
+            <RowDefinition Height="0.4*"/>
+            <RowDefinition Height="0.1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.1*"/>
+            <ColumnDefinition Width="0.4*"/>
+            <ColumnDefinition Width="0.4*"/>
+            <ColumnDefinition Width="0.1*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="1" Grid.Row="1">
+            <Border BorderBrush="White" BorderThickness="4" CornerRadius="20" Height="80">
+                <Button Content="Собрать корзину пользователя" Background="#01000000" Foreground="White" FontSize="30"/>
+            </Border>
+            <Border Margin="0 10 0 0" BorderBrush="White" BorderThickness="4" CornerRadius="20" Height="80">
+                <Button Content="Добавить товар" Background="#01000000" Foreground="White" FontSize="30"/>
+            </Border>
+        </StackPanel>
+        <Image Source="S:\CodePrograms\C#\IT-Method\ChocolateShop\ChocolateShop.UI\Images\main_icon.png" Grid.Column="2" Grid.Row="1" Grid.RowSpan="2"/>
     </Grid>
 </UserControl>

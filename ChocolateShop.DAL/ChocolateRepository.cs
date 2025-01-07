@@ -15,8 +15,15 @@ namespace ChocolateShop.DAL
             {
                 connection.Open();
 
+                var result = new List<ChocolateDto>();
+
                 string query = ChocolateQueries.GetAllChocolatesQuery;
-                List<ChocolateDto> result = connection.Query<ChocolateDto>(query).ToList();
+                List<int> ids = connection.Query<int>(query).ToList();
+
+                foreach (int id in ids)
+                {
+                    result.Add(this.GetChocolateById(id));
+                }
 
                 return result;
             }

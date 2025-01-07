@@ -5,46 +5,96 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ChocolateShop.UI.Screens"
              mc:Ignorable="d" 
-             d:DesignHeight="920" d:DesignWidth="1920">
+             d:DesignHeight="966" d:DesignWidth="1920">
+    <UserControl.Resources>
+        <Style x:Key="PlaceholderTextBoxStyle" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border x:Name="border"
+                        Padding="{TemplateBinding Padding}"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        SnapsToDevicePixels="True">
+                            <Grid>
+                                <ScrollViewer x:Name="PART_ContentHost" />
+                                <TextBlock x:Name="textBlock"
+                                   Margin="2,0,0,0"
+                                   Foreground="Gray"
+                                   IsHitTestVisible="False"
+                                   Text="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}"
+                                   Visibility="Collapsed" />
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Text" Value="">
+                                <Setter TargetName="textBlock" Property="Visibility" Value="Visible" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="Opacity" Value="0.56" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="Gray" />
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="Black" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
     <Grid Background="White">
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400"/>
             <ColumnDefinition Width="0.1*"/>
-            <ColumnDefinition Width="0.4*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="0.1*"/>
         </Grid.RowDefinitions>
-        <Rectangle Fill="Black" Margin="380 0 0 0" Grid.RowSpan="2"/>
-        <ScrollViewer Grid.RowSpan="2">
-            <StackPanel Grid.RowSpan="2">
-                <Label Content="Фильтры" FontSize="30" FontWeight="Bold"/>
-                <Border BorderBrush="Black" BorderThickness="4" CornerRadius="15" Margin="2 0 8 0">
+        <Line X1="0" Y1="0" X2="0" Y2="966" Stroke="Black" StrokeThickness="4" Grid.RowSpan="2" Grid.Column="1"/>
+        <Line X1="0" Y1="50" X2="1920" Y2="50" Stroke="Black" StrokeThickness="4" Grid.ColumnSpan="2"/>
+        <Label Content="Фильтры" FontSize="32" FontWeight="Bold"/>
+        <ScrollViewer Grid.Row="1">
+            <StackPanel>
+                <Border BorderBrush="Black" BorderThickness="4" CornerRadius="10" Margin="10 2 10 2">
                     <StackPanel>
-                        <Label Content="Цена" FontSize="30" FontWeight="Bold"/>
+                        <Label Content="Цена" FontSize="32" FontWeight="Bold"/>
                         <StackPanel Orientation="Horizontal">
                             <Label Content="От" FontSize="30" FontWeight="Bold"/>
-                            <TextBox BorderBrush="Black" BorderThickness="3" Height="40" Width="120" Text="100₽" FontSize="26" FontWeight="Bold"/>
+                            <TextBox Name="TextBoxMinCost" BorderBrush="Black" BorderThickness="3" Height="40" Width="100" Text="" FontSize="26" FontWeight="Bold" PreviewTextInput="NumberValidationTextBox" Style="{StaticResource PlaceholderTextBoxStyle}" Tag="100"/>
+                            <Label Content="₽" FontSize="30" FontWeight="Bold" Margin="-4 0 0 0"/>
                             <Label Content="До" FontSize="30" FontWeight="Bold" />
-                            <TextBox BorderBrush="Black" BorderThickness="3" Height="40" Width="120" Text="1000₽" FontSize="26" FontWeight="Bold"/>
+                            <TextBox Name="TextBoxMaxCost" BorderBrush="Black" BorderThickness="3" Height="40" Width="100" Text="" FontSize="26" FontWeight="Bold" PreviewTextInput="NumberValidationTextBox" Style="{StaticResource PlaceholderTextBoxStyle}" Tag="1000"/>
+                            <Label Content="₽" FontSize="30" FontWeight="Bold" Margin="-4 0 0 0"/>
                         </StackPanel>
                     </StackPanel>
                 </Border>
-                <Border BorderBrush="Black" BorderThickness="4" CornerRadius="15" Margin="2 4 8 0">
-                    <StackPanel Name="StackPanelCompanyField" Margin="26 0 0 0">
-                        <Label Content="Компания" FontSize="30" Margin="-24 0 0 0" FontWeight="Bold"/>
+                <Border BorderBrush="Black" BorderThickness="4" CornerRadius="10" Margin="10 2 10 2">
+                    <StackPanel Name="CompanyStackPanel">
+                        <Label Content="Компания" FontSize="32" FontWeight="Bold"/>
                     </StackPanel>
                 </Border>
-                <Border BorderBrush="Black" BorderThickness="4" CornerRadius="15" Margin="2 4 8 0">
-                    <StackPanel Name="StackPanelTypeField" Margin="26 0 0 0">
-                        <Label Content="Тип шоколада" FontSize="30" Margin="-24 0 0 0" FontWeight="Bold"/>
+                <Border BorderBrush="Black" BorderThickness="4" CornerRadius="10" Margin="10 2 10 2">
+                    <StackPanel  Name="CountryStackPanel">
+                        <Label Content="Страна" FontSize="32" FontWeight="Bold"/>
+                    </StackPanel>
+                </Border>
+                <Border BorderBrush="Black" BorderThickness="4" CornerRadius="10" Margin="10 2 10 2">
+                    <StackPanel Name="ChocolateTypeStackPanel">
+                        <Label Content="Тип шоколада" FontSize="32" FontWeight="Bold"/>
                     </StackPanel>
                 </Border>
             </StackPanel>
         </ScrollViewer>
-        <StackPanel Name="StackPanelOtherFilters" Grid.Column="1" Orientation="Horizontal"/>
-        <ScrollViewer Grid.Column="1" Grid.Row="1">
-            <WrapPanel Name="WrapPanelSearchChocolates"/>
-        </ScrollViewer>    
+        <StackPanel Orientation="Horizontal" Grid.Column="1">
+            <Border Name="PopularFilterBorder" BorderBrush="Black" BorderThickness="4" CornerRadius="6" Margin="10 2 0 4"/>
+            <Border Name="CostFilterBorder" BorderBrush="Black" BorderThickness="4" CornerRadius="6" Margin="10 2 0 4"/>
+        </StackPanel>
+        <WrapPanel Name="WrapPanelChocolateCards" Grid.Row="1" Grid.Column="1"/>
+        <Label Name="LabelNotFound" Content="По запросу ничего не найдено" Grid.Row="1" Grid.Column="1" FontSize="50" FontWeight="Bold" Foreground="#01000000" Margin="350 0 0 0"/>
     </Grid>
 </UserControl>

@@ -20,6 +20,7 @@ namespace ChocolateShop.BLL
                 cfg.AddProfile(new CompanyMapperProfile());
                 cfg.AddProfile(new TypeMapperProfile());
                 cfg.AddProfile(new ChocolateMapperProfile());
+                cfg.AddProfile(new CountryMapperProfile());
             });
             this._mapper = new Mapper(configuration);
         }
@@ -38,6 +39,13 @@ namespace ChocolateShop.BLL
             return result;
         }
         
+        public List<CountryOutputModel> GetAllCountries()
+        {
+            List<CompanyDto> companyDtos = this._chocolateRepository.GetAllChocolateCompanies();
+            List<CountryOutputModel> result = _mapper.Map<List<CountryOutputModel>>(companyDtos);
+            return result;
+        }
+
         public List<ChocolateOutputModel> GetAllChocolates()
         {
             List<ChocolateDto> chocolateDtos = this._chocolateRepository.GetAllChocolates();

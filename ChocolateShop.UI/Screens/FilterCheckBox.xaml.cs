@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace ChocolateShop.UI.Screens
 {
@@ -9,20 +10,33 @@ namespace ChocolateShop.UI.Screens
     public partial class FilterCheckBox : UserControl
     {
 
-        public string Name;
+        public string FilterName { get; set; }
         public string? OnSymbol { get; set; }
         public string? OffSymbol {  get; set; }
         public bool IsEnable = false;
+        public bool IsDisable = false;
 
-        public FilterCheckBox(string name)
+        public FilterCheckBox(string filterName)
         {
-            this.Name = name;
+            this.FilterName = filterName;
             this.Height = 30;
             this.Margin = new Thickness(0,0,0,2);
             InitializeComponent();
-            LabelFilterName.Content = this.Name;
+            LabelFilterName.Content = this.FilterName;
         }
         
+        public void Disable()
+        {
+            this.IsDisable = true;
+            LabelFilterName.Foreground = Brushes.Gray;
+        }
+
+        public void Enable()
+        {
+            this.IsDisable = false;
+            LabelFilterName.Foreground = Brushes.Black;
+        }
+
         public void Show()
         {
             if (this.IsEnable)
@@ -51,8 +65,11 @@ namespace ChocolateShop.UI.Screens
 
         private void ButtonEnableFilter_Click(object sender, RoutedEventArgs e)
         {
-            this.IsEnable = !this.IsEnable;
-            this.Show();
+            if (!this.IsDisable)
+            {
+                this.IsEnable = !this.IsEnable;
+                this.Show();
+            }
         }
     }
 }
