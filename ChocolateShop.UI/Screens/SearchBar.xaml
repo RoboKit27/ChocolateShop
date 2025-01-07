@@ -53,10 +53,10 @@
             <ColumnDefinition Width="50"/>
             <ColumnDefinition Width="50"/>
         </Grid.ColumnDefinitions>
-        <Button Name="ButtonHome" BorderBrush="Black" BorderThickness="2" Background="White">
+        <Button Name="ButtonHome" BorderBrush="Black" BorderThickness="2" Background="White" Click="ButtonHome_Click">
             <Image Source="S:\CodePrograms\C#\IT-Method\ChocolateShop\ChocolateShop.UI\Images\home_icon.png"/>
         </Button>
-        <TextBox Name="TextBoxSearch" Grid.Column="1" FontSize="32" BorderBrush="Black" BorderThickness="2"  Style="{StaticResource PlaceholderTextBoxStyle}" Tag="Search..."/>
+        <TextBox Name="TextBoxSearch" Grid.Column="1" FontSize="32" BorderBrush="Black" BorderThickness="2"  Style="{StaticResource PlaceholderTextBoxStyle}" Tag="Search..." IsKeyboardFocusedChanged="TextBoxSearch_IsKeyboardFocusedChanged"/>
         <Button Name="ButtonSearch" Grid.Column="2" BorderBrush="Black" BorderThickness="2" Background="White" Click="ButtonSearch_Click">
             <Image Source="S:\CodePrograms\C#\IT-Method\ChocolateShop\ChocolateShop.UI\Images\search_icon.png" Margin="2"/>
         </Button>

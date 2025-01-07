@@ -4,7 +4,7 @@
     {
         public static MainWindow MainWindow;
         public static MainScreen MainScreen = new();
-        public static SearchScreen SearchScreen = new();
         public static SearchBar SearchBar = new();
+        public static SearchScreen SearchScreen = new();
     }
 }

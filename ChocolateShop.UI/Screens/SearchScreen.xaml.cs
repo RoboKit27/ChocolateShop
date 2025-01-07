@@ -26,6 +26,7 @@ namespace ChocolateShop.UI.Screens
             this.LoadCompanyFilters();
             this.LoadTypeFilters();
             this.LoadCountryFilters();
+            this.Search();
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
@@ -259,6 +260,28 @@ namespace ChocolateShop.UI.Screens
             return result;
         }
 
+        public List<ChocolateOutputModel> SortLotToLittleByCost(List<ChocolateOutputModel> given)
+        {
+            if (CostFilterBorder.Child != null)
+            {
+                var result = new List<ChocolateOutputModel>();
+                bool filter = ((FilterCheckBox)(UserControl)CostFilterBorder.Child).IsEnable;
+                if (!filter)
+                {
+                    result = given.OrderByDescending(x => x.Cost).ToList();
+                }
+                else
+                {
+                    result = given.OrderBy(x => x.Cost).ToList();
+                }
+                return result;
+            }
+            else
+            {
+                return given;
+            }
+        }
+
         public void Search()
         {
             var result = this._chocolateManager.GetAllChocolates();
@@ -267,6 +290,7 @@ namespace ChocolateShop.UI.Screens
             result = this.FilterChocolatesByType(result);
             result = this.FilterChocolatesByCountry(result);
             result = this.FilterChocolatesByCost(result);
+            result = this.SortLotToLittleByCost(result);
             WrapPanelChocolateCards.Children.Clear();
             if (result.Count > 0)
             {
@@ -282,7 +306,7 @@ namespace ChocolateShop.UI.Screens
             }
             else
             {
-                LabelNotFound.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0));
+                LabelNotFound.Foreground = new SolidColorBrush(Color.FromRgb(200, 200, 200));
             }
         }
     }

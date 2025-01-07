@@ -25,8 +25,14 @@ namespace ChocolateShop.UI
         {
             InitializeComponent();
             this.SetConfig();
+            this.SetScreen(ScreensKeeper.MainScreen);
+        }
+
+        public void SetScreen(UserControl screen)
+        {
+            ScreensStackPanel.Children.Clear();
             ScreensStackPanel.Children.Add(ScreensKeeper.SearchBar);
-            ScreensStackPanel.Children.Add(ScreensKeeper.SearchScreen);
+            ScreensStackPanel.Children.Add(screen);
         }
 
         public void SetConfig()

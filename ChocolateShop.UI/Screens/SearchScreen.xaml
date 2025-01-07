@@ -95,6 +95,6 @@
             <Border Name="CostFilterBorder" BorderBrush="Black" BorderThickness="4" CornerRadius="6" Margin="10 2 0 4"/>
         </StackPanel>
         <WrapPanel Name="WrapPanelChocolateCards" Grid.Row="1" Grid.Column="1"/>
-        <Label Name="LabelNotFound" Content="По запросу ничего не найдено" Grid.Row="1" Grid.Column="1" FontSize="50" FontWeight="Bold" Foreground="#01000000" Margin="350 0 0 0"/>
+        <Label Name="LabelNotFound" Content="По запросу ничего не найдено" Grid.Row="1" Grid.Column="1" FontSize="50" FontWeight="Bold" Foreground="#01000000" Margin="350 100 0 0"/>
     </Grid>
 </UserControl>
