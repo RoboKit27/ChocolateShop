@@ -15,15 +15,15 @@ namespace ChocolateShop.DAL
             {
                 connection.Open();
 
-                var result = new List<ChocolateDto>();
-
                 string query = ChocolateQueries.GetAllChocolatesQuery;
-                List<int> ids = connection.Query<int>(query).ToList();
-
-                foreach (int id in ids)
+                List<ChocolateDto> result = connection.Query<ChocolateDto, CompanyDto, TypeDto, ChocolateDto>(query, 
+                (ch,c,t) =>
                 {
-                    result.Add(this.GetChocolateById(id));
-                }
+                    ch.Company = c;
+                    ch.Type = t;
+                    return ch;
+                },
+                splitOn:"Id").ToList();
 
                 return result;
             }
@@ -37,17 +37,19 @@ namespace ChocolateShop.DAL
 
                 string query = ChocolateQueries.GetChocolateByIdQuery;
                 var param = new { Id = id };
-                ChocolateDto result = connection.QueryFirst<ChocolateDto>(query, param);
+                ChocolateDto result = connection.Query<ChocolateDto, CompanyDto, TypeDto, ChocolateDto>(query,
+                (ch, c, t) =>
+                {
+                    ch.Company = c;
+                    ch.Type = t;
+                    return ch;
+                },
+                param,
+                splitOn: "Id").First();
 
                 query = ChocolateQueries.GetChocolateAdditivesByChocolateIdQuery;
                 result.Additives = connection.Query<AdditiveDto>(query, param).ToList();
-
-                query = ChocolateQueries.GetChocolateCompanyByChocolateIdQuery;
-                result.Company = connection.QueryFirst<CompanyDto>(query, param);
-
-                query = ChocolateQueries.GetChocolateTypeByChocolateIdQuery;
-                result.Type = connection.QueryFirst<TypeDto>(query, param);
-
+                
                 return result;
             }
         }
