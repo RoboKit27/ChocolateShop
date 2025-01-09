@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ChocolateShop.UI.Screens
 {
@@ -23,6 +11,44 @@ namespace ChocolateShop.UI.Screens
         public SearchBar()
         {
             InitializeComponent();
+        }
+
+        private void ButtonSearch_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var temp = (SearchScreen)ScreensKeeper.MainWindow.ScreensStackPanel.Children[1];
+            }
+            catch (Exception ex)
+            {
+                ScreensKeeper.MainWindow.SetScreen(ScreensKeeper.SearchScreen);
+            }
+            ScreensKeeper.SearchScreen.Search();
+        }
+
+        private void ButtonHome_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var temp = (MainScreen)ScreensKeeper.MainWindow.ScreensStackPanel.Children[1];
+            }
+            catch (Exception ex)
+            {
+                ScreensKeeper.MainWindow.SetScreen(ScreensKeeper.MainScreen);
+                TextBoxSearch.Text = "";
+            }
+        }
+
+        private void TextBoxSearch_IsKeyboardFocusedChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            try
+            {
+                var temp = (SearchScreen)ScreensKeeper.MainWindow.ScreensStackPanel.Children[1];
+            }
+            catch (Exception ex)
+            {
+                ScreensKeeper.MainWindow.SetScreen(ScreensKeeper.SearchScreen);
+            }
         }
     }
 }

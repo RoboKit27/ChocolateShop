@@ -1,28 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace ChocolateShop.UI.Windows
+namespace ChocolateShop.UI.Screens
 {
     /// <summary>
     /// Interaction logic for ProductCard.xaml
     /// </summary>
     public partial class ProductCard : UserControl
     {
-        public ProductCard()
+        public ProductCard(int id, string name, decimal cost)
         {
             InitializeComponent();
+            this.Height = 300;
+            this.Width = 200;
+            this.Margin = new Thickness(10);
+            LabelChocolateName.Content = new AccessText()
+            {
+                Text = name,
+                TextWrapping = TextWrapping.Wrap
+            };
+            LabelChocolateCost.Content = $"{cost}₽";
+            LabelChocolateId.Content = $"ID: {id}";
         }
     }
 }

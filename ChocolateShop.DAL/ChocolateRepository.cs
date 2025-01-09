@@ -3,6 +3,7 @@ using ChocolateShop.Core.Dtos;
 using ChocolateShop.DAL.Queries;
 using Dapper;
 using Npgsql;
+using System.ComponentModel.Design;
 
 namespace ChocolateShop.DAL
 {
@@ -15,7 +16,14 @@ namespace ChocolateShop.DAL
                 connection.Open();
 
                 string query = ChocolateQueries.GetAllChocolatesQuery;
-                List<ChocolateDto> result = connection.Query<ChocolateDto>(query).ToList();
+                List<ChocolateDto> result = connection.Query<ChocolateDto, CompanyDto, TypeDto, ChocolateDto>(query, 
+                (ch,c,t) =>
+                {
+                    ch.Company = c;
+                    ch.Type = t;
+                    return ch;
+                },
+                splitOn:"Id").ToList();
 
                 return result;
             }
@@ -29,17 +37,19 @@ namespace ChocolateShop.DAL
 
                 string query = ChocolateQueries.GetChocolateByIdQuery;
                 var param = new { Id = id };
-                ChocolateDto result = connection.QueryFirst<ChocolateDto>(query, param);
+                ChocolateDto result = connection.Query<ChocolateDto, CompanyDto, TypeDto, ChocolateDto>(query,
+                (ch, c, t) =>
+                {
+                    ch.Company = c;
+                    ch.Type = t;
+                    return ch;
+                },
+                param,
+                splitOn: "Id").First();
 
                 query = ChocolateQueries.GetChocolateAdditivesByChocolateIdQuery;
                 result.Additives = connection.Query<AdditiveDto>(query, param).ToList();
-
-                query = ChocolateQueries.GetChocolateCompanyByChocolateIdQuery;
-                result.Company = connection.QueryFirst<CompanyDto>(query, param);
-
-                query = ChocolateQueries.GetChocolateTypeByChocolateIdQuery;
-                result.Type = connection.QueryFirst<TypeDto>(query, param);
-
+                
                 return result;
             }
         }
@@ -70,7 +80,32 @@ namespace ChocolateShop.DAL
                     };
                     connection.Query(query, additiveParam);
                 }
+            }
+        }
 
+        public List<CompanyDto> GetAllChocolateCompanies()
+        {
+            using (var connection = new NpgsqlConnection(Options.ConnectionString))
+            {
+                connection.Open();
+
+                string query = ChocolateQueries.GetAllChocolateCompaniesQuery;
+                List<CompanyDto> result = connection.Query<CompanyDto>(query).ToList();
+
+                return result;
+            }
+        }
+        
+        public List<TypeDto> GetAllChocolateTypes()
+        {
+            using (var connection = new NpgsqlConnection(Options.ConnectionString))
+            {
+                connection.Open();
+
+                string query = ChocolateQueries.GetAllChocolateTypesQuery;
+                List<TypeDto> result = connection.Query<TypeDto>(query).ToList();
+
+                return result;
             }
         }
     }

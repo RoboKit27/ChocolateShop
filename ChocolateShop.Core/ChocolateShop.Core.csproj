@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="InputModels\" />
-    <Folder Include="OutputModels\" />
     <Folder Include="SQL\" />
   </ItemGroup>
 
