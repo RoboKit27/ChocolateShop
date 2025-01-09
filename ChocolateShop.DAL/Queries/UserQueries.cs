@@ -9,8 +9,7 @@ namespace ChocolateShop.DAL.Queries
     internal class UserQueries
     {
         public const string AddUserQuery = "insert into \"User\"(\"Id\", \"FirstName\", \"LastName\", \"Phone\", \"Password\", \"RoleId\") values(@Id, @FirstName, @LastName, @Phone, @Password, @RoleId)";
-        public const string GetAllUsersQuery = "select \"Id\", \"FirstName\", \"LastName\", \"Phone\", \"Password\", \"Role\" from \"User\";";
-        public const string GetUserByIdQuery = "select \"Id\", \"FirstName\", \"LastName\", \"Phone\", \"Password\", \"Role\" from \"User\" where \"Id\"=@Id;";
-        public const string GetRoleQuery = "select \"Id\", \"RoleId\", \"FirstName\", \"LastName\", \"Phone\", \"Password\", \"Id\" \"Name\" from \"User\"";
+        public const string GetAllUsersQuery = "select U.\"Id\", U.\"FirstName\", U.\"LastName\", U.\"Phone\", U.\"Password\", R.\"RoleId\" from \"User\" as U join \"Role\" as R on R.\"RoleId\"=U.\"RoleId\";";
+        public const string GetUserByIdQuery = "select U.\"Id\", U.\"FirstName\", U.\"LastName\", U.\"Phone\", U.\"Password\", R.\"RoleId\" from \"User\" as U join \"Role\" as R on R.\"RoleId\"=U.\"RoleId\" where \"Id\"=@Id;";
     }
 }
