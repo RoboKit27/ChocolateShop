@@ -1,0 +1,17 @@
+﻿<Window x:Class="ChocolateShop.UI.Screens.AutorisationScreen"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ChocolateShop.UI.Screens"
+        mc:Ignorable="d"
+        Title="AutorisationScreen" Height="966" Width="1920">
+    <Grid>
+        <TextBox x:Name="YouNotAutorization" HorizontalAlignment="Center" Height="132" Margin="0,118,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="760" IsEnabled="False" FontSize="72" FontFamily="Comic Sans MS" Text="Вы не авторизованы!" Foreground="Black"/>
+        <TextBlock x:Name="Registration" HorizontalAlignment="Left" Margin="176,284,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="107" Width="461" Text="Регистрация" FontSize="72" FontFamily="Comic Sans MS"/>
+        <TextBlock x:Name="Registration_Copy" HorizontalAlignment="Left" Margin="1402,284,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="107" Width="461" Text="Вход" FontSize="72" FontFamily="Comic Sans MS"/>
+        <Button Content="Зарегестрироваться" HorizontalAlignment="Left" Height="98" Margin="176,786,0,0" VerticalAlignment="Top" Width="461" Background="White" FontSize="48" FontFamily="Comic Sans MS" BorderBrush="Black"/>
+        <Button Content="Войти" HorizontalAlignment="Left" Height="98" Margin="1270,786,0,0" VerticalAlignment="Top" Width="461" Background="White" FontSize="48" FontFamily="Comic Sans MS" BorderBrush="Black"/>
+
+    </Grid>
+</Window>
